@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block main %}
+<a href='{{url_for('explore', path=title[0])}}'>{{title[1]}}</a>
+  <ul>
+  {% for base, directory in directories: %}
+    <li><a href="{{url_for('explore', path=base)}}">{{directory}}</a></li>
+  {% endfor %}
+  {% for base, _file, sub_exists in files: %}
+  <li><a href="{{url_for('play', path=base)}}">{{_file}}
+    {% if sub_exists: %}
+        [S]
+    {% else: %}
+      <a href='{{url_for('sub', path=base)}}'> &uarr; Download Subtitle</a>
+    {%endif%}
+  </a></li>
+  {% endfor %}
+</ul>
+{% endblock %}
