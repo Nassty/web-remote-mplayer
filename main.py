@@ -1,4 +1,5 @@
-from flask import Flask, render_template, g, redirect, url_for, session
+from flask import Flask, render_template, g,\
+        redirect, url_for, session, request, json, make_response
 from functools import wraps
 import os
 import mplayer
@@ -6,8 +7,9 @@ import re
 import logging
 try:
     import subliminal
+    have_subliminal = True
 except ImportError:
-    subliminal = False
+    have_subliminal = False
 
 logging.basicConfig(level=logging.DEBUG,
                     format='%(levelname)-8s %(asctime)s %(message)s',
@@ -90,19 +92,20 @@ def play(path):
 @app.route('/sub/<path:path>')
 def sub(path):
     full_path = unicode(os.path.join(app.user_home, path))
-    if subliminal:
-        with subliminal.Pool(8) as pool:
-            results = pool.download_subtitles([full_path], ['es'],
-                                              cache_dir='/tmp/', force=True)
+    if not have_subliminal:
+        return 'subliminal is required for this.\
+                please try "# pip install subliminal"'
 
-        if results:
-            return 'subtitle downloaded for %s, now play it %s'\
-                % (path, url_for('play', path=path))
-        else:
-            return 'no subtitles'
+    with subliminal.Pool(8) as pool:
+        results = pool.download_subtitles([full_path], ['es'],
+                                            cache_dir='/tmp/', force=True)
 
-    return 'subliminal is required for this.\
-            please try "# pip install subliminal"'
+    if results:
+        return 'subtitle downloaded for %s, now play it %s'\
+            % (path, url_for('play', path=path))
+    else:
+        return 'no subtitles'
+
 
 
 @app.route('/controls')
@@ -111,10 +114,22 @@ def controls():
     return render_template('controls.html')
 
 
-@app.route('/command/<cmd>')
-def command(cmd):
+@app.route('/command/', methods=['POST'])
+def command():
+    cmd = request.form['cmd']
     g.mplayer.send_cmd(cmd)
-    return redirect(url_for('controls'))
+    redirect = False
+    if cmd == 'quit':
+        redirect = url_for('explore')
+    return json.dumps({"redirect":redirect})
+
+@app.route('/apple-touch-icon.png')
+def icon():
+    with open('static/icon.png') as f:
+        response = make_response(f.read())
+    response.headers['Content-Type'] = 'image/png'
+    return response
+
 
 
 if __name__ == "__main__":
