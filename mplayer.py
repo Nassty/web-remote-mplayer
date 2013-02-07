@@ -1,6 +1,7 @@
 import subprocess
 import os
 
+
 class Mplayer(object):
 
     def __init__(self, filename=False, fifo_path='/tmp/mplayer-fifo.sock',
@@ -31,7 +32,6 @@ class Mplayer(object):
             os.unlink(self.fifo_path)
         except OSError:
             pass
-
 
     def start(self):
         self.remove_fifo()

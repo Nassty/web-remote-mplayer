@@ -1,5 +1,5 @@
 from flask import Flask, render_template, g,\
-        redirect, url_for, session, request, json, make_response
+    redirect, url_for, session, request, json, make_response
 from functools import wraps
 import os
 import mplayer
@@ -98,14 +98,13 @@ def sub(path):
 
     with subliminal.Pool(8) as pool:
         results = pool.download_subtitles([full_path], ['es'],
-                                            cache_dir='/tmp/', force=True)
+                                          cache_dir='/tmp/', force=True)
 
     if results:
         return 'subtitle downloaded for %s, now play it %s'\
             % (path, url_for('play', path=path))
     else:
         return 'no subtitles'
-
 
 
 @app.route('/controls')
@@ -121,7 +120,8 @@ def command():
     redirect = False
     if cmd == 'quit':
         redirect = url_for('explore')
-    return json.dumps({"redirect":redirect})
+    return json.dumps({"redirect": redirect})
+
 
 @app.route('/apple-touch-icon.png')
 def icon():
@@ -129,7 +129,6 @@ def icon():
         response = make_response(f.read())
     response.headers['Content-Type'] = 'image/png'
     return response
-
 
 
 if __name__ == "__main__":
