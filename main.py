@@ -125,13 +125,5 @@ def command():
     return json.dumps({"redirect": redirect})
 
 
-@app.route('/apple-touch-icon.png')
-def icon():
-    with open('static/icon.png') as f:
-        response = make_response(f.read())
-    response.headers['Content-Type'] = 'image/png'
-    return response
-
-
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0')
