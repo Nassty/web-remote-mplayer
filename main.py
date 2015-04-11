@@ -26,7 +26,7 @@ app.secret_key = "ASD"
 def get_mplayer():
     g.mplayer = mplayer.Mplayer()
     g.extensions = ('.avi', '.mp4', '.m4a', '.mov', '.mpg', '.mpeg',
-                    '.ogg', '.flac')
+                    '.ogg', '.flac', '.mkv')
 
 
 def check_running(endpoint='controls', on_stop=False):
