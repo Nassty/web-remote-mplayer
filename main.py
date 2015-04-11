@@ -124,6 +124,12 @@ def command():
         redirect = url_for('explore')
     return json.dumps({"redirect": redirect})
 
+def cleanup(fifo_path='/tmp/mplayer-fifo.sock'):
+    try:
+        os.unlink(fifo_path)
+    except OSError:
+        pass
 
 if __name__ == "__main__":
+    cleanup()
     app.run(debug=True, host='0.0.0.0')
