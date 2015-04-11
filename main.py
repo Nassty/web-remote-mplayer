@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 from flask import Flask, render_template, g,\
     redirect, url_for, session, request, json, make_response
 from functools import wraps
