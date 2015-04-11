@@ -54,7 +54,7 @@ def explore(path):
     internal_path = os.path.join(app.user_home, path)
     for content in os.listdir(internal_path):
         fullpath = os.path.join(internal_path, content)
-        if os.path.isdir(fullpath):
+        if os.path.isdir(fullpath) and not content.startswith('.'):
             directories.append((os.path.join(path, content), content))
         else:
             ext = os.path.splitext(content)[-1].lower()
