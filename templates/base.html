@@ -6,12 +6,19 @@
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <title>Remote Control</title>
 <link rel="icon" type="image/png" href="/static/icon.png">
-<script type="text/javascript" src="/static/jquery-1.9.0.min.js"></script>
+<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
 <script type="text/javascript" src="/static/code.js"></script>
-<link rel="stylesheet" href="/static/main.css" />
 </head>
 <body>
-{% block main %}
-{% endblock %}
+  <div data-role="page">
+    <div data-role="header">
+      <h1>Remote Control</h1>
+    </div>
+    <div data-role="content">
+      {% block main %}{% endblock %}
+    </div>
+  </div>
 </body>
 </html>
