@@ -6,28 +6,8 @@
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <title>Remote Control</title>
 <link rel="icon" type="image/png" href="/static/icon.png">
-<script type='text/javascript' src='/static/jquery-1.9.0.min.js'></script>
-<script type='text/javascript'>
-jQuery(function(){
-    jQuery('a.dir').click(function(e){
-      e.preventDefault();
-      window.location = $(this).attr('href');
-      return false;
-    });
-    jQuery('a.ajax').click(function(e){
-        e.preventDefault();
-        var $this = jQuery(this);
-        var href = $this.attr('href');
-        var content = {'cmd' : $this.attr('data-cmd')};
-        jQuery.post(href, content, function(e){
-          if(e.redirect != false) {
-            window.location = e.redirect;
-          }
-        }, 'json');
-        return false;
-    });
-});
-</script>
+<script type="text/javascript" src="/static/jquery-1.9.0.min.js"></script>
+<script type="text/javascript" src="/static/code.js"></script>
 <link rel="stylesheet" href="/static/main.css" />
 </head>
 <body>
