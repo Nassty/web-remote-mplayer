@@ -14,7 +14,6 @@ class Mplayer(object):
             binary,
             '-really-quiet',
             '-noconsolecontrols',
-            '-fs',
             '-slave',
             '-input',
             'file=%s' % self.fifo_path,

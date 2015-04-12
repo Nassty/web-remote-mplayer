@@ -1,20 +1,20 @@
 {% extends 'base.html' %}
 {% block main %}
 {% if title[0] %}
-<a class='dir' href='{{url_for('explore', path=title[0])}}'>&larr;{{title[1]}}</a>
+<h2><a class="dir ui-btn ui-icon-arrow-l ui-btn-icon-left" href='{{url_for('explore', path=title[0])}}'>{{title[1]}}</a></h2>
 {% endif %}
-  <ul>
-  {% for base, directory in directories: %}
-    <li><a class='dir' href="{{url_for('explore', path=base)}}">{{directory}}</a></li>
-  {% endfor %}
-  {% for base, _file, sub_exists in files: %}
-  <li><a class='dir' href="{{url_for('play', path=base)}}">{{_file}}
-    {% if sub_exists: %}
-        [S]
-    {% else: %}
-      <a class='sub' href='{{url_for('sub', path=base)}}'> &uarr; Download Subtitle</a>
-    {%endif%}
-  </a></li>
-  {% endfor %}
+<ul data-role="listview">
+{% for base, directory in directories: %}
+<li><a class="dir" href="{{url_for('explore', path=base)}}">{{directory}}</a></li>
+{% endfor %}
+{% for base, _file, sub_exists in files: %}
+{% if sub_exists: %}
+<li data-icon="gear"><a class="dir" href="{{url_for('play', path=base)}}">{{_file}}<span class="ui-li-count">S</p></a></li>
+{% else %}
+<li data-role="list-divider">{{_file}}</li>
+<li data-icon="gear"><a class="dir" href="{{url_for('play', path=base)}}">{{_file}}</a></li>
+<li data-icon="arrow-d"><a href='{{url_for('sub', path=base)}}'><p>Download Subtitle</p></a></li>
+{% endif %}
+{% endfor %}
 </ul>
 {% endblock %}

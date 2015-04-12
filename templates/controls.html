@@ -1,13 +1,20 @@
 {% extends 'base.html' %}
 {% block main %}
-<ul>
-  <!--  <li>  {{session['filename']}} </li> -->
-  <li><a class='ajax' href="{{url_for('command')}}" data-cmd='pause'>Play / Pause</a> </li>
-  <li><a class='ajax' href="{{url_for('command')}}" data-cmd='pausing_keep seek -10'>&larr; Back </a> </li>
-  <li><a class='ajax' href="{{url_for('command')}}" data-cmd='pausing_keep seek +10'>&rarr; Forward</a> </li>
-  <li><a class='ajax' href="{{url_for('command')}}" data-cmd='osd_show_progression'>OSD</a> </li>
-  <li><a class='ajax' href="{{url_for('command')}}" data-cmd='volume +10'>Volume Up</a> </li>
-  <li><a class='ajax' href="{{url_for('command')}}" data-cmd='volume -10'>Volume Down</a> </li>
-  <li><a class='ajax' href="{{url_for('command')}}" data-cmd='quit'>Quit</a> </li>
-</ul>
+<div data-role="controlgroup">
+  <a class="ajax ui-btn ui-corner-all ui-icon-action ui-btn-icon-left"
+     href="{{url_for("command")}}" data-cmd="pause">Play / Pause</a>
+  <a class="ajax ui-btn ui-corner-all ui-icon-arrow-l ui-btn-icon-left"
+     href="{{url_for("command")}}" data-cmd="pausing_keep seek -10">Back</a>
+  <a class="ajax ui-btn ui-corner-all ui-icon-arrow-r ui-btn-icon-left"
+     href="{{url_for("command")}}" data-cmd="pausing_keep seek +10">Forward</a>
+  <a class="ajax ui-btn ui-corner-all ui-icon-info ui-btn-icon-left"
+     href="{{url_for("command")}}"
+     data-cmd="osd_show_progression">Progress</a>
+  <a class="ajax ui-btn ui-corner-all ui-icon-arrow-u ui-btn-icon-left"
+     href="{{url_for("command")}}" data-cmd="volume +10">Volume Up</a>
+  <a class="ajax ui-btn ui-corner-all ui-icon-arrow-d ui-btn-icon-left"
+     href="{{url_for("command")}}" data-cmd="volume -10">Volume Down</a>
+  <a class="ajax ui-btn ui-corner-all ui-icon-delete ui-btn-icon-left"
+     href="{{url_for("command")}}" data-cmd="quit">Quit</a>
+</div>
 {% endblock %}

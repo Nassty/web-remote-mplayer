@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 from flask import Flask, render_template, g,\
     redirect, url_for, session, request, json, make_response
 from functools import wraps
@@ -24,7 +26,7 @@ app.secret_key = "ASD"
 def get_mplayer():
     g.mplayer = mplayer.Mplayer()
     g.extensions = ('.avi', '.mp4', '.m4a', '.mov', '.mpg', '.mpeg',
-                    '.ogg', '.flac')
+                    '.ogg', '.flac', '.mkv')
 
 
 def check_running(endpoint='controls', on_stop=False):
@@ -52,7 +54,7 @@ def explore(path):
     internal_path = os.path.join(app.user_home, path)
     for content in os.listdir(internal_path):
         fullpath = os.path.join(internal_path, content)
-        if os.path.isdir(fullpath):
+        if os.path.isdir(fullpath) and not content.startswith('.'):
             directories.append((os.path.join(path, content), content))
         else:
             ext = os.path.splitext(content)[-1].lower()
@@ -122,14 +124,12 @@ def command():
         redirect = url_for('explore')
     return json.dumps({"redirect": redirect})
 
-
-@app.route('/apple-touch-icon.png')
-def icon():
-    with open('static/icon.png') as f:
-        response = make_response(f.read())
-    response.headers['Content-Type'] = 'image/png'
-    return response
-
+def cleanup(fifo_path='/tmp/mplayer-fifo.sock'):
+    try:
+        os.unlink(fifo_path)
+    except OSError:
+        pass
 
 if __name__ == "__main__":
+    cleanup()
     app.run(debug=True, host='0.0.0.0')
